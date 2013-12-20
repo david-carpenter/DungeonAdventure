@@ -2,6 +2,7 @@
 
 
 
+
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -48,7 +49,7 @@ Monster getMonster() {
     monsterTable[18] = {"Giant Spider", 50, 12, 20} ;
     monsterTable[19] = {"Disgruntled Imp", 75, 15, 100} ;
     monsterTable[20] = {"Gigantic, Fire Breathing Dragon", 100, 25, 100} ;
-    monsterTable[21] = {"Derpy Hooves", 4, 1, 100} ;
+    monsterTable[21] = {"Derpy Hooves", 4, 1, 1000} ;
     monsterTable[22] = {"Loot Room", 0, 0, 8} ;
     monsterTable[23] = {"Loot Room", 0, 0, 10} ;
     monsterTable[24] = {"Loot Room", 0, 0, 12} ;
@@ -133,7 +134,7 @@ string monsterName = "bat";
 
 }
 
-	int combat(string monsterName, int monsterHP, string characterName)//monster name and health decleration parameters
+	int combat(string monsterName, int monsterHP, string characterName, int monsterAP)//monster name and health decleration parameters
 
 
 {
@@ -155,7 +156,7 @@ monsterHP = monsterHP - attack; // your damage subtracted from enemy HP bring th
 
 cout << "the " << monsterName << " now has " << monsterHP << "!" << endl;
 
-damage = Monster_Attack();
+damage = Monster_Attack() + monsterAP;
 hp = hp - damage;
 cout << "the " << monsterName << " has attacked " << characterName << " for " << damage << " Damage!" << endl << endl;
     	cout << "You are now resting on " << hp << " HP Tread cautiously warrior" << endl;
@@ -165,12 +166,13 @@ cout << "the " << monsterName << " has attacked " << characterName << " for " <<
 	if (choice == 2){ 
 
 regain = Regain_Roll();
-
+ damage = Monster_Attack();
 if (regain <= 2){ // if the dice is 2 or less you regained some health
-	cout << "you successfully regained health " << regain << "!" << endl;
+	cout << "you successfully regained health " << damage << "!" << endl;
+	hp = hp + damage;
 	}else if (regain > 2){
-            damage = Monster_Attack();
-            hp = hp - damage;
+           
+            hp = hp - damage - monsterAP;
     	cout << "you have unsuccessfully regained health" << endl;//not done with line, still need to work on HP deduction from player
     	cout << "the " << monsterName << " has attacked " << characterName << " for " << damage << " Damage!" << endl << endl;
     	cout << "You are now resting on " << hp << " HP Tread cautiously warrior" << endl;
@@ -184,7 +186,7 @@ if (choice == 3){
 	cout << "You have ran away from the swine of the darkness! " <<endl;
 	return 0;
 	}else if (runaway > 2);{ 
-	bleed = Bleed_Damage();
+	bleed = Bleed_Damage() + monsterAP;
 	cout << "You've unsuccesfully ran away! Go back to face your fate! " << endl << endl;
 	cout  << "the monster has dealt " << Bleed_Damage << " damage!" << endl;	
 }
@@ -218,12 +220,23 @@ while ((hp > 0) && (con == 1 ))
 	createdMonster = getMonster() ;
 	cout << "You walk through the dungeon door, and notice a " << createdMonster.mName << endl; //Adding Monster Later
 	//give monster log to combat.
-	result = combat(createdMonster.mName, createdMonster.hP, name);
+	result = combat(createdMonster.mName, createdMonster.hP, name, createdMonster.aP);
+	
+	if (result == 1)
+	{
 	cout << "You defeated monster and gained " << createdMonster.loot << " loot!" << endl;
-	
 	loot = loot + createdMonster.loot ;
-	
 	cout << "Current Loot = " << loot << endl ;
+	}
+	
+	if (result == 0)
+	{
+		cout << "However you have lost some loot on the way" << endl;
+		int lootLost = (loot * .25);
+		loot = (loot - lootLost);
+		cout << "Current loot: " << loot << endl;
+	}
+	
 	
 	while ((con != 1) || (con != 2))
 	{
