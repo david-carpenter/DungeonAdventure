@@ -1,0 +1,309 @@
+
+
+
+
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <ctime>
+#include <fstream>
+using namespace std;
+
+
+	struct Monster {
+		string mName ;
+		int hP ;
+		int aP ;
+		int loot ;
+	} ;
+int hp = 50;
+	//getMonster function in itself, copy directly to main source code
+
+Monster getMonster() {
+	
+		//Setting the size value of the monsterTable array
+	
+	Monster monsterTable[25] ;
+	
+		//The hard-coded monsterTable array, changable and balancable if needed
+	
+	monsterTable[0] = {"You broke this", 0, 0, 5} ; //NEVER TOUCH THIS.
+	monsterTable[1] = {"Bat", 5, 2, 4} ;
+	monsterTable[2] = {"Bat", 5, 2, 4} ;
+	monsterTable[3] = {"Bat", 5, 2, 4} ;
+	monsterTable[4] = {"Bat", 5, 2, 4} ;
+	monsterTable[5] = {"Goblin", 10, 4, 6} ;
+	monsterTable[6] = {"Goblin", 10, 4, 6} ;
+	monsterTable[7] = {"Goblin", 10, 4, 6} ;
+	monsterTable[8] = {"Goblin", 10, 4, 6} ;
+	monsterTable[9] = {"Troll", 20, 6, 10} ;
+    monsterTable[10] = {"Troll", 20, 6, 10} ;
+    monsterTable[11] = {"Troll", 20, 6, 10} ;
+    monsterTable[12] = {"Wolf", 25, 8, 12} ;
+    monsterTable[13] = {"Wolf", 25, 8, 12} ;
+    monsterTable[14] = {"Wolf", 25, 8, 12} ;
+    monsterTable[15] = {"Large Orc", 40, 10, 18} ;
+    monsterTable[16] = {"Larger Orc", 40, 10, 18} ;
+    monsterTable[17] = {"Giant Spider", 50, 12, 20} ;
+    monsterTable[18] = {"Giant Spider", 50, 12, 20} ;
+    monsterTable[19] = {"Disgruntled Imp", 75, 15, 100} ;
+    monsterTable[20] = {"Gigantic, Fire Breathing Dragon", 100, 25, 100} ;
+    monsterTable[21] = {"Derpy Hooves", 4, 1, 1000} ;
+    monsterTable[22] = {"Loot Room", 0, 0, 8} ;
+    monsterTable[23] = {"Loot Room", 0, 0, 10} ;
+    monsterTable[24] = {"Loot Room", 0, 0, 12} ;
+    monsterTable[25] = {"Loot Room", 0, 0, 15} ;
+    
+    	//NOTE: Loot rooms register as monster, but have no health and no attack points!
+    
+    
+    	//Random number generator to pick monster from the monsterTable array
+    	
+    srand((unsigned)time(0)); 
+    
+    int monsterPick; 
+
+        monsterPick = (rand()%25)+ 1 ; 
+	
+		//Return of the Monster struct from the monsterTable array based on the monsterPick random number
+	
+	return monsterTable[monsterPick] ;
+}
+
+int Bleed_Damage()
+{
+
+srand((unsigned)time(0));
+    int random_integer = (rand()%2)+1;
+   return random_integer;
+
+ }
+int Run_Away()
+{
+	
+ srand((unsigned)time(0));
+    int random_integer = (rand()%5)+1;
+   return random_integer;
+	
+}
+
+ int Combat_Roll() //what monster will get randomly generated
+
+{
+	  srand((unsigned)time(0));
+    int random_integer = (rand()%20)+1;
+   return random_integer;
+
+}
+
+int Attack_Roll()// the amount of damage that is generated for your attack
+
+{
+srand((unsigned)time(0));
+	int random_integer = (rand()%6)+4;
+   return random_integer;
+}
+
+int Regain_Roll()// the chances of you dodging
+
+{
+	srand((unsigned)time(0));
+	int random_integer = (rand()%3)+1;
+   return random_integer;
+
+}
+
+
+int Monster_Attack()
+
+{
+    srand((unsigned)time(0));
+	int random_integer = (rand()%5)+1;
+   return random_integer;
+
+}
+
+int character(string characterName)
+{
+
+
+int choice, damage;
+string monsterName = "bat";
+
+
+}
+
+	int combat(string monsterName, int monsterHP, string characterName)//monster name and health decleration parameters
+
+
+{
+	int choice, attack, regain, runaway, damage, bleed;
+	int loopnum;
+	while ((hp >0) && (monsterHP >0)){
+	system("cls");
+cout << "you have encountered a " << monsterName << "!" << endl << endl;
+cout << characterName << " = " << hp << ", " << monsterName << " = " << monsterHP << endl;
+cout << "what would you like to do?" << "(1.Attack, 2.Regain, 3.Run away):";
+
+cin >> choice;
+
+if (choice == 1) {
+attack = Attack_Roll();//attack is the amount of damage you deal
+cout << "you swing your sword for " << attack << " damage!" << endl;
+
+monsterHP = monsterHP - attack; // your damage subtracted from enemy HP bring their health down
+
+cout << "the " << monsterName << " now has " << monsterHP << "!" << endl;
+
+damage = Monster_Attack();
+hp = hp - damage;
+cout << "the " << monsterName << " has attacked " << characterName << " for " << damage << " Damage!" << endl << endl;
+    	cout << "You are now resting on " << hp << " HP Tread cautiously warrior" << endl;
+
+	}
+	
+	if (choice == 2){ 
+
+regain = Regain_Roll();
+
+if (regain <= 2){ // if the dice is 2 or less you regained some health
+	cout << "you successfully regained health " << regain << "!" << endl;
+	}else if (regain > 2){
+            damage = Monster_Attack();
+            hp = hp - damage;
+    	cout << "you have unsuccessfully regained health" << endl;//not done with line, still need to work on HP deduction from player
+    	cout << "the " << monsterName << " has attacked " << characterName << " for " << damage << " Damage!" << endl << endl;
+    	cout << "You are now resting on " << hp << " HP Tread cautiously warrior" << endl;
+	}	
+	
+}
+if (choice == 3){
+		
+		runaway = Run_Away();
+	if (runaway <= 2){
+	cout << "You have ran away from the swine of the darkness! " <<endl;
+	return 0;
+	}else if (runaway > 2);{ 
+	bleed = Bleed_Damage();
+	cout << "You've unsuccesfully ran away! Go back to face your fate! " << endl << endl;
+	cout  << "the monster has dealt " << Bleed_Damage << " damage!" << endl;	
+}
+	
+}
+loopnum++;
+}
+return 1;
+}
+
+
+//void sort(int[]);
+//void reWriteScore(int[]);
+int main()
+{ 
+int loot = 0;
+string name = "turlteducksarethebestducks";
+int con = 1;
+int counter = 0;
+int result;
+Monster createdMonster ;
+while (name.length() >= 7) {
+	cout << "What's the adventures name" << endl;
+	cout << "(Can only be seven characters)"<< endl;
+	cin >> name;
+	system ("cls");
+	}
+	
+while ((hp > 0) && (con == 1 ))
+{
+	createdMonster = getMonster() ;
+	cout << "You walk through the dungeon door, and notice a " << createdMonster.mName << endl; //Adding Monster Later
+	//give monster log to combat.
+	result = combat(createdMonster.mName, createdMonster.hP, name);
+	cout << "You defeated monster and gained " << createdMonster.loot << " loot!" << endl;
+	
+	loot = loot + createdMonster.loot ;
+	
+	cout << "Current Loot = " << loot << endl ;
+	
+	while ((con != 1) || (con != 2))
+	{
+	con = 5 ;
+	
+	cout << "A door has appeared, continue?" << endl;
+	cout << "1) YES" << endl << "2) NO" << endl;
+	cin >> con;
+	system ("cls") ;
+
+	if (con == 1) {
+		break ;
+	}
+	if (con == 2) {	
+		cout << "You have left the dungeon." << endl;
+		cout << "Congradulations!" << endl ;
+		cout << "You've aquired " << loot << " Loot!" << endl ;
+		break;
+	
+	}
+}
+} 
+
+
+if (hp <= 0) {
+	cout << "Game Over, You have lost your loot..." << endl;
+}
+string filename = ".\\CrashReport";
+ifstream infile;
+infile.open(filename.c_str());
+int highscore[11];
+
+while (counter < 10)
+{
+	infile >> highscore[counter];
+	counter++;
+}
+infile.close();
+highscore[10] = loot;
+if (hp > 0)
+{
+	
+//sort(highscore);
+counter = 0;
+
+while (counter < 10)
+{
+	cout << highscore[counter];
+	cout << endl;
+	counter++;
+
+//reWriteScore(highscore);
+}
+
+
+
+}
+counter = 0;
+    ofstream out;
+    out.open(filename.c_str());
+while (counter < 10)
+{
+out << highscore[counter];
+out << endl; 
+counter++;
+
+//
+}
+out.close();
+}
+void sort(int a[], int b[]){
+
+    for(int i = 0; i < 11; i++){
+        for(int j = 0; j < (11 - 1); j++){
+            if( a[j+1] > a[j]){
+                swap(a[j+1], a[j]);
+                //swap(b[J+1], b[j]);
+            }
+        }
+    }
+}
+
