@@ -2,7 +2,6 @@
 
 
 
-
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -49,7 +48,7 @@ Monster getMonster() {
     monsterTable[18] = {"Giant Spider", 50, 12, 20} ;
     monsterTable[19] = {"Disgruntled Imp", 75, 15, 100} ;
     monsterTable[20] = {"Gigantic, Fire Breathing Dragon", 100, 25, 100} ;
-    monsterTable[21] = {"Derpy Hooves", 4, 1, 1000} ;
+    monsterTable[21] = {"Derpy Hooves", 4, 1, 100} ;
     monsterTable[22] = {"Loot Room", 0, 0, 8} ;
     monsterTable[23] = {"Loot Room", 0, 0, 10} ;
     monsterTable[24] = {"Loot Room", 0, 0, 12} ;
